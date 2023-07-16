@@ -1,26 +1,18 @@
-import fs from 'fs';
+import dotenv from 'dotenv';
+import copyFile from './utils/copyFile.js';
 
-async function copyFile(source, destination) {
-  console.log('Source: ' + source.toString());
-  console.log('Destination: ' + destination.toString());
-  const destDir = destination.substring(0, destination.lastIndexOf('/'));
-  console.log('destDir:' + destDir.toString());
+dotenv.config();
+
+export default function main() {
   try {
-    await fs.mkdir(destDir, { recursive: true });
-    await fs.copyFile(source, destination);
+    copyFile(
+      process.env.INPUT_SOURCE_FILE,
+      process.env.OUTPUT_DESTINATION_FILE
+    );
+    console.log('Success!');
   } catch (err) {
-    // Handle error, for example by throwing or logging it
-    console.error(`Error occurred: ${err}`);
-    throw err.toString();
+    console.error(err);
   }
 }
 
-// Example usage
-try {
-  copyFile('source.txt', 'destination.txt');
-  console.log('Success!');
-} catch (err) {
-  console.error(err);
-}
-
-module.exports = { copyFile };
+main();
