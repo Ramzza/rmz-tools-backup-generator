@@ -1,6 +1,6 @@
 {
   "name": "rmz-tools-backup-generator",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Tool for generating local backups for files",
   "main": "src/app.js",
   "type": "module",

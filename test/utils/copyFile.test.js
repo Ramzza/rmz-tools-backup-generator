@@ -4,6 +4,10 @@ import copyFile from '../../src/utils/copyFile';
 jest.mock('fs');
 
 describe('copyfile', () => {
+  it('throws error if source is undefined', async () => {
+    await expect(copyFile(undefined, 'destination.txt')).rejects.toThrow();
+  });
+
   it('copies file successfully', async () => {
     fs.mkdir.mockImplementation((path, options) => {});
     fs.copyFile.mockImplementation((src, dest) => {});
