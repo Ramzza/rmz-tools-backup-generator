@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Tool for generating local backups for files",
   "main": "src/app.js",
+  "type": "module",
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
@@ -10,7 +11,8 @@
   },
   "scripts": {
     "test": "jest --silent",
-    "build": "webpack --config webpack.config.js --mode production"
+    "build": "webpack --config webpack.config.js --mode production",
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -32,5 +34,8 @@
     "terser-webpack-plugin": "^5.3.9",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
   }
 }
