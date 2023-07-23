@@ -1,6 +1,6 @@
 import app from '../src/app.js';
 import readInputFile from '../src/utils/readInputFile.js';
-import copyFile from '../src/utils/copyFile.js';
+import copyFile, { getSuffixedFileName } from '../src/utils/copyFile.js';
 
 jest.mock('../src/utils/readInputFile');
 jest.mock('../src/utils/copyFile');
@@ -15,6 +15,7 @@ describe('app', () => {
     copyFile.mockReturnValue(null);
     app();
     expect(readInputFile).toHaveBeenCalled();
+    expect(getSuffixedFileName).not.toHaveBeenCalled();
     expect(copyFile).not.toHaveBeenCalled();
   });
 
@@ -26,6 +27,7 @@ describe('app', () => {
     });
     app();
     expect(readInputFile).toHaveBeenCalled();
+    expect(getSuffixedFileName).toHaveBeenCalled(undefined);
     expect(copyFile).toHaveBeenCalledWith(undefined, undefined);
     expect(app).not.toThrow();
   });
@@ -39,6 +41,7 @@ describe('app', () => {
     copyFile.mockReturnValue(null);
     app();
     expect(readInputFile).toHaveBeenCalled();
+    expect(getSuffixedFileName).toHaveBeenCalledTimes(2);
     expect(copyFile).toHaveBeenCalledTimes(2);
   });
 });
