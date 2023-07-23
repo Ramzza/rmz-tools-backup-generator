@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import copyFile from './utils/copyFile.js';
+import copyFile, { getSuffixedFileName } from './utils/copyFile.js';
 import readInputFile from './utils/readInputFile.js';
 
 dotenv.config();
@@ -9,7 +9,7 @@ export default function main() {
     const inputJson = readInputFile();
 
     inputJson.forEach((fileToCopy) => {
-      copyFile(fileToCopy.src, fileToCopy.dest);
+      copyFile(fileToCopy.src, getSuffixedFileName(fileToCopy.dest));
     });
     console.log('Success!');
   } catch (err) {

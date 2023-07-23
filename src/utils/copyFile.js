@@ -1,19 +1,36 @@
 import fs from 'fs';
 
+export const getSuffixedFileName = (fileName) => {
+  if (!fileName) {
+    throw new Error('fileName is undefined');
+  }
+  const dotIndex = fileName.lastIndexOf('.');
+  const suffix = new Date().toISOString().replace(/:/g, '-');
+  return `${fileName.substring(0, dotIndex)}-${suffix}${fileName.substring(
+    dotIndex
+  )}`;
+};
+
 export default async function copyFile(source, destination) {
-  console.log('Source: ' + source.toString());
-  console.log('Destination: ' + destination.toString());
+  if (!source) {
+    throw new Error('Source is undefined');
+  }
+  if (!destination) {
+    throw new Error('Destination is undefined');
+  }
   const destDir = destination.substring(0, destination.lastIndexOf('/'));
-  console.log('destDir:' + destDir.toString());
   try {
     await fs.mkdir(destDir, { recursive: true }, (err) => {
-      console.log('Error: ' + err);
+      if (err) {
+        console.log('Error: ' + err);
+      }
     });
     await fs.copyFile(source, destination, (err) => {
-      console.log('Error: ' + err);
+      if (err) {
+        console.log('Error: ' + err);
+      }
     });
   } catch (err) {
-    // Handle error, for example by throwing or logging it
     console.error(`Error occurred: ${err}`);
     throw err.toString();
   }
