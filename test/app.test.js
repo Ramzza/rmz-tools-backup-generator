@@ -5,6 +5,8 @@ import copyFile, { getSuffixedFileName } from '../src/utils/copyFile.js';
 jest.mock('../src/utils/readInputFile');
 jest.mock('../src/utils/copyFile');
 
+const copyUseCase = 'copyFile';
+
 describe('app', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -13,7 +15,7 @@ describe('app', () => {
   it('does not copy on missing input', async () => {
     readInputFile.mockReturnValue(null);
     copyFile.mockReturnValue(null);
-    app();
+    app(copyUseCase);
     expect(readInputFile).toHaveBeenCalled();
     expect(getSuffixedFileName).not.toHaveBeenCalled();
     expect(copyFile).not.toHaveBeenCalled();
@@ -25,7 +27,7 @@ describe('app', () => {
     copyFile.mockReturnValue(() => {
       throw new Error();
     });
-    app();
+    app(copyUseCase);
     expect(readInputFile).toHaveBeenCalled();
     expect(getSuffixedFileName).toHaveBeenCalled(undefined);
     expect(copyFile).toHaveBeenCalledWith(undefined, undefined);
@@ -39,7 +41,7 @@ describe('app', () => {
     ];
     readInputFile.mockReturnValue(input);
     copyFile.mockReturnValue(null);
-    app();
+    app(copyUseCase);
     expect(readInputFile).toHaveBeenCalled();
     expect(getSuffixedFileName).toHaveBeenCalledTimes(2);
     expect(copyFile).toHaveBeenCalledTimes(2);
