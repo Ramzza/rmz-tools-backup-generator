@@ -8,7 +8,7 @@ describe('getSuffixedFileName', () => {
     expect(() => getSuffixedFileName(undefined)).toThrow();
   });
 
-  it('returns suffixed file name', () => {
+  it('PRD-002: returns suffixed file name', () => {
     const fileName = 'file.txt';
     const suffixedFileName = getSuffixedFileName(fileName);
 
@@ -26,22 +26,22 @@ describe('copyfile', () => {
     await expect(copyFile('source.txt', undefined)).rejects.toThrow();
   });
 
-  it('copies file successfully', async () => {
+  it('PRD-002: copies file successfully', async () => {
     fs.mkdir.mockImplementation((path, options) => {});
     fs.copyFile.mockImplementation((src, dest) => {});
 
     await expect(
-      copyFile('source.txt', 'destination.txt')
+      copyFile('source.txt', 'nested/destination.txt')
     ).resolves.not.toThrow();
 
     expect(fs.mkdir).toHaveBeenCalledWith(
-      '',
+      'nested',
       { recursive: true },
       expect.any(Function)
     );
     expect(fs.copyFile).toHaveBeenCalledWith(
       'source.txt',
-      'destination.txt',
+      'nested/destination.txt',
       expect.any(Function)
     );
   });
